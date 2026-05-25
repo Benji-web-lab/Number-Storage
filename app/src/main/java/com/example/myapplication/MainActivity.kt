@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         // UI Variables
       private lateinit var  editText: EditText
       private lateinit var button: Button
+      private lateinit var buttonavg: Button
       private lateinit var textView: TextView
 
 
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
             // Link Variables to Views
             editText = findViewById(R.id.editInput)
             button = findViewById(R.id.btnAdd)
+            buttonavg = findViewById(R.id.btnavg)
             textView    = findViewById(R.id.textmsg)
 
             //  Button Click Listener
@@ -56,13 +58,32 @@ class MainActivity : AppCompatActivity() {
                     textView.text = "Message: Array is full. Cannot store more values."
                 }
             }
-
-
+            //  Average Button
+            buttonavg.setOnClickListener {
+                if (counter == 0) {
+                    textView.text = "Message: No numbers stored yet."
+                } else {
+                    val avg = calculateAverage()
+                    textView.text = "Message: Average = $avg"
+                }
+            }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+    }
+    // ── Function: Calculate Average using While Loop ──────
+    private fun calculateAverage(): Double {
+        var sum = 0
+        var i = 0
+
+        while (i < counter) {       // while loop as shown on whiteboard
+            sum += numbers[i]
+            i++
+        }
+
+        return sum.toDouble() / counter
     }
 }
